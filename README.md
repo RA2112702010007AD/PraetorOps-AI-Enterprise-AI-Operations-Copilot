@@ -161,6 +161,7 @@ PraetorOps AI is built for native deployment on Google Cloud Platform:
 
 6. **Open in Browser:**
    Navigate to [http://localhost:8000](http://localhost:8000).
+   Live Demo: https://praetorops-ai-enterprise-ai-operations.onrender.com/
 
 ---
 

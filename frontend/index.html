@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PraetorOps AI — Enterprise AI Operations Copilot</title>
+  <meta name="description" content="Secure, Gemini-powered agentic AI copilot for enterprise operations, incident triage, RAG knowledge retrieval, and human-in-the-loop governance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="stylesheet" href="/static/css/components.css">
+</head>
+<body class="theme-dark">
+  <div id="app" class="app-layout">
+    
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar" id="mainSidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <div class="brand-symbol">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">PraetorOps AI</span>
+            <span class="brand-tag">ENTERPRISE COPILOT</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">PLATFORM</div>
+        <button class="nav-item" data-view="login" id="nav-login">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          <span>Identity & Sign-In</span>
+        </button>
+        <button class="nav-item active" data-view="overview" id="nav-overview">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+          <span>Overview</span>
+        </button>
+        <button class="nav-item" data-view="copilot" id="nav-copilot">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v4"/><path d="M10 9h4"/></svg>
+          <span>AI Copilot</span>
+          <span class="nav-badge pulse">Live</span>
+        </button>
+        <button class="nav-item" data-view="incidents" id="nav-incidents">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+          <span>Incidents</span>
+          <span class="nav-counter" id="incidentsCountBadge">10</span>
+        </button>
+        <button class="nav-item" data-view="approvals" id="nav-approvals">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span>Approvals</span>
+          <span class="nav-counter warning" id="approvalsCountBadge">2</span>
+        </button>
+
+        <div class="nav-section-title">KNOWLEDGE & AGENTS</div>
+        <button class="nav-item" data-view="knowledge" id="nav-knowledge">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+          <span>Knowledge Base (RAG)</span>
+        </button>
+        <button class="nav-item" data-view="observability" id="nav-observability">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h5l2-7 4 14 3-7h6"/></svg>
+          <span>Agent Activity</span>
+        </button>
+        <button class="nav-item" data-view="evaluations" id="nav-evaluations">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m4.93 19.07 4.24-4.24"/></svg>
+          <span>Evaluations</span>
+          <span class="nav-badge success">97%</span>
+        </button>
+
+        <div class="nav-section-title">GOVERNANCE & TRUST</div>
+        <button class="nav-item" data-view="audit" id="nav-audit">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          <span>Audit Logs</span>
+        </button>
+        <button class="nav-item" data-view="security" id="nav-security">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Security & Guard</span>
+        </button>
+        <button class="nav-item" data-view="architecture" id="nav-architecture">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          <span>Architecture</span>
+        </button>
+        <button class="nav-item" data-view="landing" id="nav-landing">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Public Overview</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar Footer / Environment info -->
+      <div class="sidebar-footer">
+        <div class="env-pill">
+          <span class="status-dot online"></span>
+          <span>Google Cloud Vertex AI</span>
+        </div>
+        <div class="version-label">v1.0.0 • ADK Aligned</div>
+      </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <div class="main-wrapper">
+      
+      <!-- Top Application Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          
+          <div class="breadcrumb" id="headerBreadcrumb">
+            <span class="crumb-root">PraetorOps AI</span>
+            <span class="crumb-separator">/</span>
+            <span class="crumb-current" id="currentViewName">Overview</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Tenant Context Selector -->
+          <div class="tenant-selector-wrapper">
+            <label for="tenantSelect" class="header-label">TENANT CONTEXT</label>
+            <div class="select-with-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/><path d="M14 9h1"/><path d="M14 13h1"/><path d="M14 17h1"/></svg>
+              <select id="tenantSelect" class="header-select">
+                <option value="tenant_acme" selected>Acme Global Enterprise (Production)</option>
+                <option value="tenant_nova">Nova Financial (PCI Dedicated)</option>
+                <option value="tenant_demo">Global Demo Sandbox</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Persona / Simulated Auth Role Selector -->
+          <div class="persona-selector-wrapper">
+            <label for="personaSelect" class="header-label">ACTIVE PERSONA</label>
+            <div class="select-with-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <select id="personaSelect" class="header-select">
+                <option value="Engineer" selected>Sarah Chen — Staff SRE (Engineer)</option>
+                <option value="Admin">Marcus Vance — VP Cloud Ops (Admin)</option>
+                <option value="Analyst">Alex Rivera — Lead SecOps (Analyst)</option>
+                <option value="Viewer">Elena Rostova — Tech Support (Viewer)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- RBAC Badge -->
+          <div class="rbac-pill" id="currentRoleBadge">
+            <span class="role-indicator"></span>
+            <span id="currentRoleName">Engineer</span>
+          </div>
+
+          <!-- Switch User / Sign Out Button -->
+          <button class="btn btn-secondary btn-sm" id="headerSwitchUserBtn" title="Switch Persona / Sign Out">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Switch User</span>
+          </button>
+
+          <!-- Quick Action / Launch Copilot -->
+          <button class="btn btn-primary btn-sm" id="quickLaunchCopilotBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Ask Copilot</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <main class="content-body" id="mainContent">
+        <!-- Views dynamically injected here via JS -->
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Shared Global Modals & Drawers -->
+  <div id="modalContainer" class="modal-backdrop hidden"></div>
+
+  <!-- Scripts -->
+  <script src="/static/js/state.js"></script>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/views/login.js"></script>
+  <script src="/static/js/views/landing.js"></script>
+  <script src="/static/js/views/overview.js"></script>
+  <script src="/static/js/views/copilot.js"></script>
+  <script src="/static/js/views/incidents.js"></script>
+  <script src="/static/js/views/knowledge.js"></script>
+  <script src="/static/js/views/approvals.js"></script>
+  <script src="/static/js/views/observability.js"></script>
+  <script src="/static/js/views/evaluations.js"></script>
+  <script src="/static/js/views/audit.js"></script>
+  <script src="/static/js/views/security.js"></script>
+  <script src="/static/js/views/architecture.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

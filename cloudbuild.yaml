@@ -1,0 +1,36 @@
+# Google Cloud Build pipeline for PraetorOps AI
+steps:
+  # 1. Build container image in Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '$_REGION-docker.pkg.dev/$PROJECT_ID/praetorops-repo/praetorops-ai:$COMMIT_SHA'
+      - '-t'
+      - '$_REGION-docker.pkg.dev/$PROJECT_ID/praetorops-repo/praetorops-ai:latest'
+      - '.'
+
+  # 2. Push container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '$_REGION-docker.pkg.dev/$PROJECT_ID/praetorops-repo/praetorops-ai:$COMMIT_SHA'
+
+  # 3. Deploy to Google Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'praetorops-ai'
+      - '--image=$_REGION-docker.pkg.dev/$PROJECT_ID/praetorops-repo/praetorops-ai:$COMMIT_SHA'
+      - '--region=$_REGION'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--set-env-vars=ENVIRONMENT=production,DEFAULT_TENANT_ID=tenant_acme'
+
+substitutions:
+  _REGION: 'us-central1'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
